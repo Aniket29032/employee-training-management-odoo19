@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <!-- Root Menu -->
+    <menuitem
+        id="menu_employee_training_root"
+        name="Employee Training"
+        sequence="10"
+    />
+
+    <!-- Courses -->
+    <menuitem
+        id="menu_et_course"
+        name="Courses"
+        parent="menu_employee_training_root"
+        action="action_et_course"
+        sequence="10"/>
+
+    <!-- Sessions -->
+    <menuitem
+        id="menu_et_session"
+        name="Sessions"
+        parent="menu_employee_training_root"
+        action="action_et_session"
+        sequence="20"/>
+
+    <!-- Attendance -->
+    <menuitem
+        id="menu_et_session_attendance"
+        name="Attendance"
+        parent="menu_employee_training_root"
+        action="action_et_session_attendance"
+        sequence="30"/>
+
+    <!-- Contacts -->
+    <menuitem
+        id="menu_training_contacts"
+        name="Contacts"
+        parent="menu_employee_training_root"
+        sequence="40"/>
+
+    <menuitem
+        id="menu_training_trainers"
+        name="Trainers"
+        parent="menu_training_contacts"
+        action="action_training_trainers"
+        sequence="1"/>
+
+    <menuitem
+        id="menu_training_trainees"
+        name="Trainees"
+        parent="menu_training_contacts"
+        action="action_training_trainees"
+        sequence="2"/>
+
+    <!-- Certificates -->
+    <menuitem
+        id="menu_et_course_certificate"
+        name="Certificates"
+        parent="menu_employee_training_root"
+        action="action_et_course_certificate"
+        sequence="50"/>
+
+    <!-- Reporting -->
+    <menuitem
+        id="menu_et_reporting_root"
+        name="Reporting"
+        parent="menu_employee_training_root"
+        sequence="80"/>
+
+    <menuitem
+        id="menu_course_analysis"
+        name="Course Analysis"
+        parent="menu_et_reporting_root"
+        action="action_course_analysis"
+        sequence="1"/>
+
+    <!-- Configuration -->
+    <menuitem
+        id="menu_et_configuration"
+        name="Configuration"
+        parent="menu_employee_training_root"
+        sequence="100"/>
+
+    <menuitem
+        id="menu_et_course_tags"
+        name="Tags"
+        parent="menu_et_configuration"
+        action="action_et_course_tags"
+        sequence="10"/>
+
+</odoo>

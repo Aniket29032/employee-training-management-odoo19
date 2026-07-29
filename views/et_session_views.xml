@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <!-- ===================================================== -->
+    <!-- LIST VIEW -->
+    <!-- ===================================================== -->
+
+    <record id="view_et_session_list" model="ir.ui.view">
+        <field name="name">et.session.list</field>
+        <field name="model">et.session</field>
+
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="course_id"/>
+                <field name="trainer_employee_id"/>
+                <field name="session_start_time"/>
+                <field name="session_end_time"/>
+                <field name="state"/>
+            </list>
+        </field>
+    </record>
+
+
+    <!-- ===================================================== -->
+    <!-- FORM VIEW -->
+    <!-- ===================================================== -->
+
+    <record id="view_et_session_form" model="ir.ui.view">
+        <field name="name">et.session.form</field>
+        <field name="model">et.session</field>
+
+        <field name="arch" type="xml">
+
+            <form>
+
+                <header>
+
+                    <field name="state"
+                           widget="statusbar"
+                           statusbar_visible="draft,in_progress,done,cancel"/>
+
+                    <!-- START SESSION -->
+
+                    <button name="action_start_session"
+                            type="object"
+                            string="Start Session"
+                            class="btn-primary"
+                            invisible="session_start_time"
+                            groups="employee_training_management.group_training_trainer,
+                                    employee_training_management.group_training_admin"/>
+
+                    <!-- TAKE ATTENDANCE -->
+
+                    <button name="action_open_attendance_wizard"
+                            type="object"
+                            string="Take Attendance"
+                            class="btn-primary"
+                            invisible="state != 'in_progress'"
+                            groups="employee_training_management.group_training_trainer,
+                                    employee_training_management.group_training_admin"/>
+
+                    <!-- CREATE TASKS -->
+
+                    <button name="action_create_tasks"
+                            type="object"
+                            string="Create Tasks"
+                            class="btn-secondary"
+                            groups="employee_training_management.group_training_trainer,
+                                    employee_training_management.group_training_admin"/>
+
+                    <!-- COMPLETE -->
+
+                    <button name="action_complete_session"
+                            type="object"
+                            string="Complete Session"
+                            class="btn-success"
+                            invisible="state != 'in_progress'"
+                            groups="employee_training_management.group_training_trainer,
+                                    employee_training_management.group_training_admin"/>
+
+                    <!-- CANCEL -->
+
+                    <button name="action_cancel_session"
+                            type="object"
+                            string="Cancel"
+                            class="btn-secondary"
+                            invisible="state in ('done','cancel')"
+                            groups="employee_training_management.group_training_trainer,
+                                    employee_training_management.group_training_admin"/>
+
+                </header>
+
+                <sheet>
+
+                    <!-- SMART BUTTONS -->
+
+                    <div class="oe_button_box" name="button_box">
+
+                        <button name="action_view_attendance"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-calendar-check-o">
+
+                            <field name="attendance_count"
+                                   widget="statinfo"
+                                   string="Attendance"/>
+
+                        </button>
+
+                        <button name="action_view_trainees"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-users">
+
+                            <field name="trainee_count"
+                                   widget="statinfo"
+                                   string="Trainees"/>
+
+                        </button>
+
+                        <button name="action_view_tasks"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-tasks">
+
+                            <field name="task_count"
+                                   widget="statinfo"
+                                   string="Tasks"/>
+
+                        </button>
+
+                    </div>
+
+                    <!-- SESSION INFO -->
+
+                    <group>
+
+                        <group>
+
+                            <field name="name"/>
+
+                            <field name="course_id"/>
+
+                            <field name="trainer_employee_id"
+                                   readonly="not is_training_admin"/>
+
+                            <field name="is_training_admin"
+                                   invisible="1"/>
+
+                        </group>
+
+                        <group>
+
+                            <field name="session_start_time"/>
+
+                            <field name="session_end_time"/>
+
+                        </group>
+
+                    </group>
+
+                    <!-- TRAINEES -->
+
+                    <group>
+
+                        <field name="trainee_employee_ids"
+                               widget="many2many_tags"
+                               invisible="is_training_employee"/>
+
+                        <field name="is_training_employee"
+                               invisible="1"/>
+
+                        <field name="current_employee_id"
+                               string="Trainee"
+                               readonly="1"
+                               invisible="not is_training_employee"/>
+
+                    </group>
+
+                    <!-- NOTEBOOK -->
+
+                    <notebook>
+
+                        <page string="Attendance">
+
+                            <field name="attendance_ids"
+                                   readonly="1">
+
+                                <list decoration-success="status == 'present'"
+                                      decoration-danger="status == 'absent'">
+
+                                    <field name="attendance_date"/>
+
+                                    <field name="trainee_employee_id"/>
+
+                                    <field name="status"/>
+
+                                    <field name="trainer_employee_id"
+                                           optional="hide"/>
+
+                                    <field name="course_id"
+                                           optional="hide"/>
+
+                                </list>
+
+                            </field>
+
+                        </page>
+
+                    </notebook>
+
+                </sheet>
+
+                <chatter/>
+
+            </form>
+
+        </field>
+    </record>
+
+
+    <!-- ===================================================== -->
+    <!-- SEARCH -->
+    <!-- ===================================================== -->
+
+    <record id="view_et_session_search" model="ir.ui.view">
+
+        <field name="name">et.session.search</field>
+
+        <field name="model">et.session</field>
+
+        <field name="arch" type="xml">
+
+            <search>
+
+                <field name="name"/>
+
+                <field name="course_id"/>
+
+                <field name="trainer_employee_id"/>
+
+                <separator/>
+
+                <filter name="group_course"
+                        string="Course"
+                        context="{'group_by':'course_id'}"/>
+
+                <filter name="group_trainer"
+                        string="Trainer"
+                        context="{'group_by':'trainer_employee_id'}"/>
+
+            </search>
+
+        </field>
+
+    </record>
+
+
+    <!-- ===================================================== -->
+    <!-- ACTION -->
+    <!-- ===================================================== -->
+
+    <record id="action_et_session" model="ir.actions.act_window">
+
+        <field name="name">Sessions</field>
+
+        <field name="res_model">et.session</field>
+
+        <field name="view_mode">list,form</field>
+
+    </record>
+
+</odoo>

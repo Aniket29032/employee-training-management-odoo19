@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="view_hr_employee_training_form" model="ir.ui.view">
+        <field name="name">hr.employee.training.form</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//div[@name='button_box']" position="inside">
+
+                <!-- Sessions -->
+                <button
+                    name="action_view_training_sessions"
+                    type="object"
+                    class="oe_stat_button"
+                    icon="fa-calendar">
+
+                    <field
+                        name="training_session_count"
+                        widget="statinfo"
+                        string="Sessions"/>
+
+                </button>
+
+                <!-- Tasks -->
+                <button
+                    name="action_view_training_tasks"
+                    type="object"
+                    class="oe_stat_button"
+                    icon="fa-tasks">
+
+                    <field
+                        name="training_task_count"
+                        widget="statinfo"
+                        string="Tasks"/>
+
+                </button>
+
+                <!-- Attendance -->
+                <button
+                    name="action_view_training_attendance"
+                    type="object"
+                    class="oe_stat_button"
+                    icon="fa-check-square-o">
+
+                    <field
+                        name="training_attendance_count"
+                        widget="statinfo"
+                        string="Attendance"/>
+
+                </button>
+
+                <!-- Certificates -->
+
+                <button
+                    name="action_view_training_certificates"
+                    type="object"
+                    class="oe_stat_button"
+                    icon="fa-certificate"
+                    invisible="not is_trainee">
+
+                    <field
+                        name="training_certificate_count"
+                        widget="statinfo"
+                        string="Certificates"/>
+
+                </button>
+
+            </xpath>
+
+        </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <!-- ===================================================== -->
+    <!-- SESSION RULES                                         -->
+    <!-- ===================================================== -->
+
+    <!-- Employee -->
+    <record id="rule_et_session_employee" model="ir.rule">
+        <field name="name">ET Session Employee</field>
+        <field name="model_id" ref="model_et_session"/>
+        <field name="domain_force">
+            [('trainee_employee_ids.user_id', '=', user.id)]
+        </field>
+        <field name="groups"
+               eval="[(4, ref('employee_training_management.group_training_employee'))]"/>
+    </record>
+
+    <!-- Trainer -->
+    <record id="rule_et_session_trainer" model="ir.rule">
+        <field name="name">ET Session Trainer</field>
+        <field name="model_id" ref="model_et_session"/>
+        <field name="domain_force">
+            [('trainer_employee_id.user_id', '=', user.id)]
+        </field>
+        <field name="groups"
+               eval="[(4, ref('employee_training_management.group_training_trainer'))]"/>
+    </record>
+
+    <!-- Admin -->
+    <record id="rule_et_session_admin" model="ir.rule">
+        <field name="name">ET Session Admin</field>
+        <field name="model_id" ref="model_et_session"/>
+        <field name="domain_force">[(1,'=',1)]</field>
+        <field name="groups"
+               eval="[(4, ref('employee_training_management.group_training_admin'))]"/>
+    </record>
+
+
+    <!-- ===================================================== -->
+    <!-- ATTENDANCE RULES                                      -->
+    <!-- ===================================================== -->
+
+    <!-- Employee: Only own attendance -->
+    <record id="rule_et_attendance_employee" model="ir.rule">
+        <field name="name">ET Attendance Employee</field>
+        <field name="model_id" ref="model_et_session_attendance"/>
+        <field name="domain_force">
+            [('trainee_employee_id.user_id', '=', user.id)]
+        </field>
+        <field name="groups"
+               eval="[(4, ref('employee_training_management.group_training_employee'))]"/>
+    </record>
+
+    <!-- Trainer: Attendance of own sessions -->
+    <record id="rule_et_attendance_trainer" model="ir.rule">
+        <field name="name">ET Attendance Trainer</field>
+        <field name="model_id" ref="model_et_session_attendance"/>
+        <field name="domain_force">
+            [('session_id.trainer_employee_id.user_id', '=', user.id)]
+        </field>
+        <field name="groups"
+               eval="[(4, ref('employee_training_management.group_training_trainer'))]"/>
+    </record>
+
+    <!-- Admin -->
+    <record id="rule_et_attendance_admin" model="ir.rule">
+        <field name="name">ET Attendance Admin</field>
+        <field name="model_id" ref="model_et_session_attendance"/>
+        <field name="domain_force">[(1,'=',1)]</field>
+        <field name="groups"
+               eval="[(4, ref('employee_training_management.group_training_admin'))]"/>
+    </record>
+
+
+    <!-- ===================================================== -->
+    <!-- COURSE RULES                                          -->
+    <!-- ===================================================== -->
+
+    <!-- Employee -->
+    <record id="rule_et_course_employee" model="ir.rule">
+        <field name="name">ET Course Employee</field>
+        <field name="model_id" ref="model_et_course"/>
+        <field name="domain_force">
+            [('session_ids.trainee_employee_ids.user_id', '=', user.id)]
+        </field>
+        <field name="groups"
+               eval="[(4, ref('employee_training_management.group_training_employee'))]"/>
+    </record>
+
+    <!-- Trainer -->
+    <record id="rule_et_course_trainer" model="ir.rule">
+        <field name="name">ET Course Trainer</field>
+        <field name="model_id" ref="model_et_course"/>
+        <field name="domain_force">
+            [('session_ids.trainer_employee_id.user_id', '=', user.id)]
+        </field>
+        <field name="groups"
+               eval="[(4, ref('employee_training_management.group_training_trainer'))]"/>
+    </record>
+
+    <!-- Admin -->
+    <record id="rule_et_course_admin" model="ir.rule">
+        <field name="name">ET Course Admin</field>
+        <field name="model_id" ref="model_et_course"/>
+        <field name="domain_force">[(1,'=',1)]</field>
+        <field name="groups"
+               eval="[(4, ref('employee_training_management.group_training_admin'))]"/>
+    </record>
+
+
+    <!-- ===================================================== -->
+    <!-- CERTIFICATE RULES                                     -->
+    <!-- ===================================================== -->
+
+    <!-- Employee -->
+    <record id="rule_et_certificate_employee" model="ir.rule">
+        <field name="name">ET Certificate Employee</field>
+        <field name="model_id" ref="model_et_course_certificate"/>
+        <field name="domain_force">
+            [('employee_id.user_id', '=', user.id)]
+        </field>
+        <field name="groups"
+               eval="[(4, ref('employee_training_management.group_training_employee'))]"/>
+    </record>
+
+    <!-- Trainer -->
+    <record id="rule_et_certificate_trainer" model="ir.rule">
+        <field name="name">ET Certificate Trainer</field>
+        <field name="model_id" ref="model_et_course_certificate"/>
+        <field name="domain_force">
+            [('course_id.session_ids.trainer_employee_id.user_id', '=', user.id)]
+        </field>
+        <field name="groups"
+               eval="[(4, ref('employee_training_management.group_training_trainer'))]"/>
+    </record>
+
+    <!-- Admin -->
+    <record id="rule_et_certificate_admin" model="ir.rule">
+        <field name="name">ET Certificate Admin</field>
+        <field name="model_id" ref="model_et_course_certificate"/>
+        <field name="domain_force">[(1,'=',1)]</field>
+        <field name="groups"
+               eval="[(4, ref('employee_training_management.group_training_admin'))]"/>
+    </record>
+
+
+    <!-- ===================================================== -->
+    <!-- TASK RULES                                            -->
+    <!-- ===================================================== -->
+
+    <!-- Employee -->
+    <record id="rule_project_task_employee" model="ir.rule">
+        <field name="name">Training Task Employee</field>
+        <field name="model_id" ref="project.model_project_task"/>
+        <field name="domain_force">
+            [('user_ids.employee_id.user_id', '=', user.id)]
+        </field>
+        <field name="groups"
+               eval="[(4, ref('employee_training_management.group_training_employee'))]"/>
+    </record>
+
+    <!-- Trainer -->
+    <record id="rule_project_task_trainer" model="ir.rule">
+        <field name="name">Training Task Trainer</field>
+        <field name="model_id" ref="project.model_project_task"/>
+        <field name="domain_force">
+            [('training_session_id.trainer_employee_id.user_id', '=', user.id)]
+        </field>
+        <field name="groups"
+               eval="[(4, ref('employee_training_management.group_training_trainer'))]"/>
+    </record>
+
+    <!-- Admin -->
+    <record id="rule_project_task_admin" model="ir.rule">
+        <field name="name">Training Task Admin</field>
+        <field name="model_id" ref="project.model_project_task"/>
+        <field name="domain_force">[(1,'=',1)]</field>
+        <field name="groups"
+               eval="[(4, ref('employee_training_management.group_training_admin'))]"/>
+    </record>
+
+</odoo>

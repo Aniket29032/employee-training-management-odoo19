@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <template id="training_certificate_report">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.basic_layout">
+                    <div class="certificate-page">
+
+                        <style>
+                            * { box-sizing: border-box; }
+
+                            .certificate-page {
+                                margin: 0;
+                                padding: 0;
+                            }
+
+                            .certificate-outer {
+                                width: 100%;
+                                height: 190mm;
+                                overflow: hidden;
+                                border: 10px solid #1b5e20;
+                                padding: 10px;
+                                position: relative;
+                                font-family: 'Georgia', serif;
+                                background: #ffffff;
+                            }
+
+                            .certificate-inner {
+                                width: 100%;
+                                height: 100%;
+                                border: 3px solid #2e7d32;
+                                position: relative;
+                                text-align: center;
+                                padding: 20px 50px;
+                            }
+
+                            /* Decorative corner brackets */
+                            .corner {
+                                position: absolute;
+                                width: 34px;
+                                height: 34px;
+                                border: 3px solid #1b5e20;
+                            }
+                            .corner-tl { top: 8px; left: 8px; border-right: none; border-bottom: none; }
+                            .corner-tr { top: 8px; right: 8px; border-left: none; border-bottom: none; }
+                            .corner-bl { bottom: 8px; left: 8px; border-right: none; border-top: none; }
+                            .corner-br { bottom: 8px; right: 8px; border-left: none; border-top: none; }
+
+                            .cert-company {
+                                font-size: 13px;
+                                letter-spacing: 4px;
+                                color: #1b5e20;
+                                text-transform: uppercase;
+                                margin-top: 14px;
+                                font-weight: bold;
+                            }
+
+                            .cert-title {
+                                font-size: 40px;
+                                font-weight: bold;
+                                color: #1b5e20;
+                                margin: 10px 0 22px 0;
+                                letter-spacing: 1px;
+                            }
+
+                            .cert-line {
+                                font-size: 15px;
+                                color: #333;
+                                margin: 6px 0;
+                            }
+
+                            .cert-employee-name {
+                                font-size: 30px;
+                                font-weight: bold;
+                                color: #222;
+                                margin: 10px auto 4px auto;
+                                display: inline-block;
+                                border-bottom: 2px solid #1b5e20;
+                                padding: 0 20px 6px 20px;
+                                min-width: 380px;
+                            }
+
+                            .cert-course-name {
+                                font-size: 22px;
+                                font-weight: bold;
+                                color: #1b5e20;
+                                margin: 8px 0 4px 0;
+                            }
+
+                            .cert-awarded-by {
+                                font-size: 15px;
+                                color: #333;
+                                margin: 14px 0 2px 0;
+                            }
+
+                            .cert-company-name {
+                                font-size: 20px;
+                                font-weight: bold;
+                                color: #222;
+                                margin-bottom: 10px;
+                            }
+
+                            .cert-date {
+                                font-size: 14px;
+                                color: #333;
+                                margin-top: 10px;
+                            }
+
+                            .cert-footer {
+                                display: table;
+                                width: 100%;
+                                table-layout: fixed;
+                                position: absolute;
+                                bottom: 22px;
+                                left: 0;
+                                padding: 0 80px;
+                            }
+
+                            .cert-footer-cell {
+                                display: table-cell;
+                                width: 50%;
+                                text-align: center;
+                                vertical-align: bottom;
+                            }
+
+                            .cert-sign-line {
+                                border-top: 1px solid #999;
+                                margin: 0 40px 6px 40px;
+                                padding-top: 6px;
+                                font-size: 13px;
+                                color: #222;
+                            }
+
+                            .cert-sign-label {
+                                font-size: 10px;
+                                color: #777;
+                                text-transform: uppercase;
+                                letter-spacing: 1px;
+                            }
+                            .cert-number {
+                                position: absolute;
+                                bottom: 10px;
+                                right: 24px;
+                                font-size: 10px;
+                                color: #888;
+                                letter-spacing: 0.5px;
+                            }
+                        </style>
+
+                        <div class="certificate-outer">
+                            <div class="certificate-inner">
+
+                                <div class="corner corner-tl"/>
+                                <div class="corner corner-tr"/>
+                                <div class="corner corner-bl"/>
+                                <div class="corner corner-br"/>
+
+                                <div class="cert-company">
+                                    <span t-esc="o.company_id.name"/>
+                                </div>
+
+                                <div class="cert-title">Certificate of Training</div>
+
+                                <div class="cert-line">This certifies that</div>
+
+                                <div class="cert-employee-name">
+                                    <span t-esc="o.employee_id.name"/>
+                                </div>
+
+                                <div class="cert-line">
+                                    has successfully completed the training course for
+                                </div>
+
+                                <div class="cert-course-name">
+                                    <span t-esc="o.course_id.name"/>
+                                </div>
+
+                                <div class="cert-awarded-by">
+                                    and is awarded this certificate by
+                                </div>
+
+                                <div class="cert-company-name">
+                                    <span t-esc="o.company_id.name"/>
+                                </div>
+
+                               
+
+                                <div class="cert-footer">
+    <div class="cert-footer-cell">
+        <div>
+            <span t-field="o.issue_date"/>
+        </div>
+        <div class="cert-sign-label">Date of Issue</div>
+    </div>
+    <div class="cert-footer-cell">
+        <div class="cert-sign-line">
+            <span t-esc="o.responsible_id.name"/>
+        </div>
+        <div class="cert-sign-label">Authorized Signatory</div>
+    </div>
+</div>
+
+                                <div class="cert-number">
+                                    Certificate No: <span t-esc="o.name"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+</odoo>

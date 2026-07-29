@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<odoo>
+
+    <record id="seq_et_course_certificate"
+            model="ir.sequence">
+
+        <field name="name">Course Certificate</field>
+
+        <field name="code">et.course.certificate</field>
+
+        <field name="prefix">CERT/</field>
+
+        <field name="padding">5</field>
+
+    </record>
+
+</odoo>

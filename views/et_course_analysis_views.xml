@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <!-- =========================
+            PIVOT VIEW
+    ========================== -->
+
+    <record id="view_et_attendance_pivot" model="ir.ui.view">
+
+        <field name="name">et.session.attendance.pivot</field>
+
+        <field name="model">et.session.attendance</field>
+
+        <field name="arch" type="xml">
+
+            <pivot string="Attendance Analysis">
+
+                <field name="course_id" type="row"/>
+
+                <field name="trainer_employee_id" type="row"/>
+
+                <field name="session_id" type="col"/>
+
+                <field name="status" type="col"/>
+
+                <!-- Count Attendance Records -->
+                <field name="id" type="measure"/>
+
+            </pivot>
+
+        </field>
+
+    </record>
+
+    <!-- =========================
+            ACTION
+    ========================== -->
+
+    <record id="action_course_analysis" model="ir.actions.act_window">
+
+        <field name="name">Attendance Analysis</field>
+
+        <field name="res_model">et.session.attendance</field>
+
+        <field name="view_mode">pivot,list</field>
+
+    </record>
+
+</odoo>

@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ===================================================== -->
+    <!-- Training Task Assigned -->
+    <!-- ===================================================== -->
+
+    <record id="mail_template_training_task_assigned"
+            model="mail.template">
+
+        <field name="name">Training Task Assigned</field>
+
+        <field name="model_id"
+               ref="project.model_project_task"/>
+
+        <field name="subject">
+            New Training Task Assigned - {{ object.name }}
+        </field>
+
+        <field name="email_to">
+            {{ object.user_ids and object.user_ids[0].email or '' }}
+        </field>
+
+        <field name="email_from">
+            {{ user.email_formatted }}
+        </field>
+
+        <field name="body_html" type="html">
+
+            <div>
+
+                <p>Hello,</p>
+
+                <p>
+                    A new training task has been assigned to you.
+                </p>
+
+                <p>
+
+                    <strong>Task :</strong>
+                    <t t-out="object.name"/>
+
+                    <br/>
+
+                    <strong>Project :</strong>
+                    <t t-out="object.project_id.name"/>
+
+                </p>
+
+                <p>
+                    Please complete your task before the deadline.
+                </p>
+
+                <br/>
+
+                <p>
+                    Regards,<br/>
+                    Training Team
+                </p>
+
+            </div>
+
+        </field>
+
+    </record>
+
+
+
+    <!-- ===================================================== -->
+    <!-- Training Task Approved -->
+    <!-- ===================================================== -->
+
+    <record id="mail_template_training_task_approved"
+            model="mail.template">
+
+        <field name="name">Training Task Approved</field>
+
+        <field name="model_id"
+               ref="project.model_project_task"/>
+
+        <field name="subject">
+            Training Task Approved - {{ object.name }}
+        </field>
+
+        <field name="email_to">
+            {{ object.user_ids and object.user_ids[0].email or '' }}
+        </field>
+
+        <field name="email_from">
+            {{ user.email_formatted }}
+        </field>
+
+        <field name="body_html" type="html">
+
+            <div>
+
+                <p>Hello,</p>
+
+                <p>
+
+                    Your submitted training task
+
+                    <strong>
+                        <t t-out="object.name"/>
+                    </strong>
+
+                    has been
+
+                    <strong>Approved</strong>.
+
+                </p>
+
+                <p>
+
+                    Congratulations and keep up the good work.
+
+                </p>
+
+                <br/>
+
+                <p>
+
+                    Regards,<br/>
+                    Training Team
+
+                </p>
+
+            </div>
+
+        </field>
+
+    </record>
+
+
+
+    <!-- ===================================================== -->
+    <!-- Training Task Rejected -->
+    <!-- ===================================================== -->
+
+    <record id="mail_template_training_task_rejected"
+            model="mail.template">
+
+        <field name="name">Training Task Rejected</field>
+
+        <field name="model_id"
+               ref="project.model_project_task"/>
+
+        <field name="subject">
+            Training Task Rejected - {{ object.name }}
+        </field>
+
+        <field name="email_to">
+            {{ object.user_ids and object.user_ids[0].email or '' }}
+        </field>
+
+        <field name="email_from">
+            {{ user.email_formatted }}
+        </field>
+
+        <field name="body_html" type="html">
+
+            <div>
+
+                <p>Hello,</p>
+
+                <p>
+
+                    Your submitted training task
+
+                    <strong>
+                        <t t-out="object.name"/>
+                    </strong>
+
+                    has been
+
+                    <strong>Rejected</strong>.
+
+                </p>
+
+                <p>
+
+                    <strong>Trainer Comments :</strong>
+
+                </p>
+
+                <div>
+
+                    <t t-out="object.review_comment"/>
+
+                </div>
+
+                <br/>
+
+                <p>
+
+                    Please update your work and submit it again.
+
+                </p>
+
+                <br/>
+
+                <p>
+
+                    Regards,<br/>
+                    Training Team
+
+                </p>
+
+            </div>
+
+        </field>
+
+    </record>
+
+    <!-- ===================================================== -->
+<!-- Training Certificate -->
+<!-- ===================================================== -->
+
+<record id="mail_template_training_certificate"
+        model="mail.template">
+
+    <field name="name">Training Certificate</field>
+
+    <!-- Certificate model -->
+    <field name="model_id"
+           ref="employee_training_management.model_et_course_certificate"/>
+
+    <field name="subject">
+        Training Certificate - {{ object.course_id.name }}
+    </field>
+
+    <field name="email_to">
+        {{ object.employee_id.work_email or '' }}
+    </field>
+
+    <field name="email_from">
+        {{ user.email_formatted }}
+    </field>
+
+    <field name="body_html" type="html">
+
+        <div>
+
+            <p>Hello
+                <strong>
+                    <t t-out="object.employee_id.name"/>
+                </strong>,
+            </p>
+
+            <p>
+                Congratulations!
+            </p>
+
+            <p>
+                You have successfully completed the training course
+                <strong>
+                    <t t-out="object.course_id.name"/>
+                </strong>.
+            </p>
+
+            <p>
+                Your training certificate has been generated.
+            </p>
+
+            <p>
+                Certificate Number:
+                <strong>
+                    <t t-out="object.name"/>
+                </strong>
+            </p>
+
+            <br/>
+
+            <p>
+                Regards,<br/>
+                Training Team
+            </p>
+
+        </div>
+
+    </field>
+
+</record>
+
+</odoo>

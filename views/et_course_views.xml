@@ -1,0 +1,342 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <!-- =========================
+            LIST VIEW
+    ========================== -->
+    <record id="view_et_course_list" model="ir.ui.view">
+        <field name="name">et.course.list</field>
+        <field name="model">et.course</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="number"/>
+                <field name="name"/>
+                <field name="duration_days"/>
+                <field name="state"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- =========================
+            FORM VIEW
+    ========================== -->
+    <record id="view_et_course_form" model="ir.ui.view">
+        <field name="name">et.course.form</field>
+        <field name="model">et.course</field>
+        <field name="arch" type="xml">
+            <form>
+
+                <header invisible="is_training_employee">
+
+                <button
+                    name="action_set_to_draft"
+                    string="Set to Draft"
+                    type="object"
+                    class="btn-secondary"
+                    invisible="state != 'cancel'"/>
+
+                <button
+                    name="action_start"
+                    string="Start Course"
+                    type="object"
+                    class="btn-primary"
+                    invisible="state != 'draft'"/>
+
+                <button
+                    name="action_done"
+                    string="Done"
+                    type="object"
+                    class="btn-success"
+                    invisible="state != 'in_progress'"/>
+
+
+                <button
+                    name="action_create_project"
+                    string="Create Project"
+                    type="object"
+                    invisible="state != 'in_progress' or project_id"/>
+
+                <button
+                    name="action_generate_certificates"
+                    string="Generate Certificates"
+                    type="object"
+                    class="btn-primary"
+                    invisible="state != 'done'"/>
+
+                <button
+                    name="action_send_certificates"
+                    string="Send Certificates"
+                    type="object"
+                    class="btn-secondary"
+                    invisible="certificate_count == 0"/>
+
+                <button
+                    name="action_open_reject_wizard"
+                    string="Reject"
+                    type="object"
+                    class="btn-danger"
+                    invisible="state != 'in_progress'"/>
+
+                <field
+                    name="state"
+                    widget="statusbar"
+                    statusbar_visible="draft,in_progress,done,cancel"/>
+
+                </header>
+                <field name="number" readonly="1"/>
+
+                <sheet>
+                    <field name="is_training_employee" invisible="1"/>
+                    <field name="current_employee_id" invisible="1"/>
+
+                <!-- Smart Buttons -->
+        <div class="oe_button_box" name="button_box" invisible="is_training_employee">
+
+            <!-- Sessions -->
+            <button
+                name="action_view_sessions"
+                type="object"
+                class="oe_stat_button"
+                icon="fa-calendar">
+
+                <field
+                    name="session_count"
+                    widget="statinfo"
+                    string="Sessions"/>
+
+            </button>
+
+            <!-- Trainers -->
+            <button
+                name="action_view_trainers"
+                type="object"
+                class="oe_stat_button"
+                icon="fa-user">
+
+                <field
+                    name="trainer_count"
+                    widget="statinfo"
+                    string="Trainers"/>
+
+            </button>
+
+            <!-- Trainees -->
+            <button
+                name="action_view_trainees"
+                type="object"
+                class="oe_stat_button"
+                icon="fa-users">
+
+                <field
+                    name="trainee_count"
+                    widget="statinfo"
+                    string="Trainees"/>
+
+            </button>
+
+            <!-- Attendance -->
+            <button
+                name="action_view_attendance"
+                type="object"
+                class="oe_stat_button"
+                icon="fa-calendar-check-o">
+
+                <field
+                    name="attendance_count"
+                    widget="statinfo"
+                    string="Attendance"/>
+
+            </button>
+
+            <!-- Tasks -->
+            <button
+                name="action_view_tasks"
+                type="object"
+                class="oe_stat_button"
+                icon="fa-tasks">
+
+                <field
+                    name="task_count"
+                    widget="statinfo"
+                    string="Tasks"/>
+
+            </button>
+
+            <!-- Project -->
+            <button
+                name="action_view_project"
+                type="object"
+                class="oe_stat_button"
+                icon="fa-folder-open"
+                invisible="not project_id">
+
+                <field
+                    name="project_count"
+                    widget="statinfo"
+                    string="Project"/>
+
+            </button>
+
+            <button
+                name="action_view_certificates"
+                type="object"
+                class="oe_stat_button"
+                icon="fa-certificate">
+
+                <field
+                    name="certificate_count"
+                    widget="statinfo"
+                    string="Certificates"/>
+
+            </button>
+
+        </div>
+
+
+                    <div class="oe_button_box" name="button_box" invisible="is_training_employee">
+
+                        <button
+                            name="action_view_project"
+                            type="object"
+                            class="oe_stat_button"
+                            icon="fa-folder-open">
+
+                        <field
+                            name="project_id"
+                            string="Project"
+                            widget="statinfo"
+                            readonly="1"/>
+
+                        </button>
+
+</div>
+
+                
+
+
+                    <group>
+
+                        <group>
+                            <field name="name"/>
+                            <field name="tag_ids" widget="many2many_tags"/>
+                            <field name="project_id" readonly="1"/>
+                        </group>
+
+                        <group>
+                            <field name="duration_days"/>
+                            <field name="course_index" filename="name"/>
+                            <field name="company_id" invisible="is_training_employee"/>
+
+                            
+                        </group>
+
+                    </group>
+
+                    <notebook>
+
+                        <page string="Course Index">
+
+                            <field name="index_ids">
+
+                                <list editable="bottom">
+                                    <field name="sequence"/>
+                                    <field name="name"/>
+                                </list>
+
+                            </field>
+
+                        </page>
+
+                        <page string="Sessions">
+
+                            <field name="session_ids" readonly="1" invisible="is_training_employee">
+
+                                <list>
+                                    <field name="name"/>
+                                    <field name="trainer_employee_id"/>
+                                    <field name="session_start_time"/>
+                                    <field name="session_end_time"/>
+                                </list>
+
+                            </field>
+
+                        </page>
+
+                        <page string="Other Information">
+
+                            <group>
+
+                                <group>
+
+                                    <field name="company_id"/>
+
+                                    <field name="currency_id" invisible="1"/>
+
+                                    <field name="training_cost"/>
+                                    
+                                    <field
+                                        name="reject_reason"
+                                        readonly="1"
+                                        invisible="state != 'cancel'"/>
+
+                                </group>
+
+                            </group>
+
+                        </page>
+
+                    </notebook>
+
+                </sheet>
+
+                <chatter>
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </chatter>
+
+            </form>
+        </field>
+    </record>
+
+    <!-- =========================
+            SEARCH VIEW
+    ========================== -->
+    <record id="view_et_course_search" model="ir.ui.view">
+        <field name="name">et.course.search</field>
+        <field name="model">et.course</field>
+        <field name="arch" type="xml">
+            <search>
+
+                <field name="number"/>
+                <field name="name"/>
+
+                <filter
+                    name="draft"
+                    string="Draft"
+                    domain="[('state','=','draft')]"/>
+
+                <filter
+                    name="in_progress"
+                    string="In Progress"
+                    domain="[('state','=','in_progress')]"/>
+
+                <filter
+                    name="done"
+                    string="Done"
+                    domain="[('state','=','done')]"/>
+
+            </search>
+        </field>
+    </record>
+
+    <!-- =========================
+            ACTION
+    ========================== -->
+    <record id="action_et_course" model="ir.actions.act_window">
+        <field name="name">Courses</field>
+        <field name="res_model">et.course</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+</odoo>

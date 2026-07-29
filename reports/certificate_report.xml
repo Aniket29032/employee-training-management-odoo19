@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="action_report_training_certificate"
+            model="ir.actions.report">
+
+        <field name="name">Training Certificate</field>
+
+        <field name="model">et.course.certificate</field>
+
+        <field name="report_type">qweb-pdf</field>
+
+        <field name="report_name">employee_training_management.training_certificate_report</field>
+
+        <field name="report_file">employee_training_management.training_certificate_report</field>
+
+        <field name="print_report_name">'Certificate - %s' % (object.employee_id.name)</field>
+    </record>
+
+</odoo>
