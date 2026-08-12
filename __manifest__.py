@@ -11,7 +11,7 @@ Manage employee training courses, sessions,
 attendance, trainers, certificates and reporting.
 """,
     "category": "Human Resources",
-    "author": "Your Name",
+    "author": "Aniket",
     "website": "",
     "license": "LGPL-3",
     "depends": [
